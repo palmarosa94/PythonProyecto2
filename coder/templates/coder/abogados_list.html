@@ -1,0 +1,71 @@
+{% extends "coder/index.html" %}
+{% load static %}
+
+{% block contenido %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-10">
+
+      <!-- Título y formulario de búsqueda -->
+      <div class="d-flex align-items-center justify-content-between mb-4">
+        <h2 class="h4 mb-0 text-secondary">Listado de abogados</h2>
+        <form class="d-flex" method="get" action="">
+          <input
+            class="form-control me-2"
+            type="search"
+            name="q"
+            value="{{ query }}"
+            placeholder="Buscar por nombre, apellido o N°"
+            aria-label="Buscar"
+            style="min-width: 220px;"
+          >
+          <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+        </form>
+      </div>
+
+      <!-- Tabla de resultados -->
+      <div class="card shadow-sm">
+        <div class="card-body p-0">
+          {% if abogados.exists %}
+            <div class="table-responsive">
+              <table class="table table-hover mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th scope="col">N°</th>
+                    <th scope="col">Nro. abogado</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido</th>
+                    <th scope="col">Email</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for a in abogados %}
+                  <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ a.nro_abogado }}</td>
+                    <td>{{ a.nombre }}</td>
+                    <td>{{ a.apellido }}</td>
+                    <td>{{ a.email }}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+        </div>
+
+        <div class="card-footer d-flex justify-content-between align-items-center">
+          <small class="text-muted">Mostrando {{ abogados|length }} resultado{{ abogados|length|pluralize }}</small>
+        </div>
+
+          {% else %}
+            <div class="p-4 text-center">
+              <p class="mb-2">No se encontraron registros.</p>
+              <p class="text-muted mb-0">Probá con otra búsqueda o <a href="{% url 'index' %}">volver al inicio</a>.</p>
+            </div>
+          {% endif %}
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

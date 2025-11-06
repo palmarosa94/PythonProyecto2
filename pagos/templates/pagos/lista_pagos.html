@@ -1,0 +1,42 @@
+{% extends "coder/index.html" %}
+
+{% block contenido %}
+<div class="container mt-5">
+  <div class="card shadow-sm border-0 rounded-4 p-4">
+    <h2 class="text-center mb-4 text-primary fw-bold">Mis Pagos</h2>
+
+    {% if pagos %}
+      <table class="table table-hover align-middle text-center">
+        <thead class="table-light">
+          <tr>
+            <th scope="col">N° Siniestro</th>
+            <th scope="col">Importe</th>
+            <th scope="col">Fecha Solicitud</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for pago in pagos %}
+          <tr>
+            <td>{{ pago.nro_siniestro }}</td>
+            <td>${{ pago.importe }}</td>
+            <td>{{ pago.fecha_solicitud|date:"d/m/Y H:i" }}</td>
+            <td>
+              <a href="{% url 'detalle_pago' pago.id %}" class="btn btn-outline-primary btn-sm me-1">Ver</a>
+              <a href="{% url 'editar_pago' pago.id %}" class="btn btn-outline-warning btn-sm me-1">Editar</a>
+              <a href="{% url 'borrar_pago' pago.id %}" class="btn btn-outline-danger btn-sm">Borrar</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p class="text-center text-muted">Aún no hay pagos registrados.</p>
+    {% endif %}
+
+    <div class="text-center mt-4">
+      <a href="{% url 'crear_pago' %}" class="btn btn-success px-4">+ Registrar nuevo pago</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

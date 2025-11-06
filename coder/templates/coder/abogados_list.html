@@ -6,21 +6,30 @@
   <div class="row justify-content-center">
     <div class="col-12 col-lg-10">
 
-      <!-- Título y formulario de búsqueda -->
-      <div class="d-flex align-items-center justify-content-between mb-4">
+      <!-- Título, botón nuevo abogado y formulario de búsqueda -->
+      <div class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-2">
         <h2 class="h4 mb-0 text-secondary">Listado de abogados</h2>
-        <form class="d-flex" method="get" action="">
-          <input
-            class="form-control me-2"
-            type="search"
-            name="q"
-            value="{{ query }}"
-            placeholder="Buscar por nombre, apellido o N°"
-            aria-label="Buscar"
-            style="min-width: 220px;"
-          >
-          <button class="btn btn-outline-secondary" type="submit">Buscar</button>
-        </form>
+
+        <div class="d-flex align-items-center gap-2">
+          <!-- Botón nuevo abogado -->
+          <a href="{% url 'abogado_form' %}" class="btn btn-success">
+            + Nuevo Abogado
+          </a>
+
+          <!-- Formulario de búsqueda -->
+          <form class="d-flex" method="get" action="">
+            <input
+              class="form-control me-2"
+              type="search"
+              name="q"
+              value="{{ query }}"
+              placeholder="Buscar por nombre, apellido o N°"
+              aria-label="Buscar"
+              style="min-width: 220px;"
+            >
+            <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+          </form>
+        </div>
       </div>
 
       <!-- Tabla de resultados -->
@@ -36,16 +45,23 @@
                     <th scope="col">Nombre</th>
                     <th scope="col">Apellido</th>
                     <th scope="col">Email</th>
+                    <th scope="col" class="text-center">Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {% for a in abogados %}
+                  {% for abogado in abogados %}
                   <tr>
                     <th scope="row">{{ forloop.counter }}</th>
-                    <td>{{ a.nro_abogado }}</td>
-                    <td>{{ a.nombre }}</td>
-                    <td>{{ a.apellido }}</td>
-                    <td>{{ a.email }}</td>
+                    <td>{{ abogado.nro_abogado }}</td>
+                    <td>{{ abogado.nombre }}</td>
+                    <td>{{ abogado.apellido }}</td>
+                    <td>{{ abogado.email }}</td>
+                    <td class="text-center">
+                      <div class="btn-group" role="group" aria-label="Acciones">
+                        <a href="{% url 'eliminar_abogado' abogado.nro_abogado %}" class="btn btn-sm btn-outline-danger">Eliminar</a>
+                        <a href="{% url 'modificar_abogado' abogado.nro_abogado %}" class="btn btn-sm btn-outline-warning">Modificar</a>
+                      </div>
+                    </td>
                   </tr>
                   {% endfor %}
                 </tbody>
@@ -60,7 +76,10 @@
           {% else %}
             <div class="p-4 text-center">
               <p class="mb-2">No se encontraron registros.</p>
-              <p class="text-muted mb-0">Probá con otra búsqueda o <a href="{% url 'index' %}">volver al inicio</a>.</p>
+              <p class="text-muted mb-0">
+                Probá con otra búsqueda o 
+                <a href="{% url 'abogado_form' %}" class="text-decoration-none">agregá un nuevo abogado</a>.
+              </p>
             </div>
           {% endif %}
       </div>

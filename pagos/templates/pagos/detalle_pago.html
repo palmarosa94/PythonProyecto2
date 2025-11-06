@@ -1,0 +1,35 @@
+{% extends "coder/index.html" %}
+
+{% block contenido %}
+<div class="container mt-5">
+  <div class="card shadow-sm border-0 rounded-4 p-5 mx-auto" style="max-width: 600px;">
+    <h2 class="text-center mb-4 text-primary fw-bold">Detalle del Pago</h2>
+
+    <div class="mb-3">
+      <p class="mb-1 fw-bold">N° Siniestro:</p>
+      <p class="text-muted">{{ pago.nro_siniestro }}</p>
+    </div>
+
+    <div class="mb-3">
+      <p class="mb-1 fw-bold">Importe:</p>
+      <p class="text-muted">${{ pago.importe }}</p>
+    </div>
+
+    <div class="mb-3">
+      <p class="mb-1 fw-bold">Fecha de Solicitud:</p>
+      <p class="text-muted">{{ pago.fecha_solicitud|date:"d/m/Y H:i" }}</p>
+    </div>
+
+    <div class="mb-4">
+      <p class="mb-1 fw-bold">N° Abogado:</p>
+      <p class="text-muted">{{ pago.nro_abogado }}</p>
+    </div>
+
+    <div class="text-center mt-4">
+      <a href="{% url 'editar_pago' pago.id %}" class="btn btn-outline-warning me-2">Editar</a>
+      <a href="{% url 'borrar_pago' pago.id %}" class="btn btn-outline-danger me-2">Borrar</a>
+      <a href="{% url 'lista_pagos' %}" class="btn btn-primary">Volver a la lista</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

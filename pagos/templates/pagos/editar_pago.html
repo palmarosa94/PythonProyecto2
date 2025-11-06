@@ -1,0 +1,30 @@
+{% extends "coder/index.html" %}
+
+{% block contenido %}
+<div class="container mt-5">
+  <div class="card shadow-sm border-0 rounded-4 p-5 mx-auto" style="max-width: 600px;">
+    <h2 class="text-center mb-4 text-primary fw-bold">Editar Pago</h2>
+
+    <form method="post" novalidate>
+      {% csrf_token %}
+      
+      {% for field in form %}
+        <div class="mb-3">
+          <label class="form-label fw-bold">{{ field.label }}</label>
+          {{ field }}
+          {% if field.errors %}
+            <div class="text-danger small mt-1">
+              {{ field.errors|striptags }}
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+
+      <div class="text-center mt-4">
+        <button type="submit" class="btn btn-success px-4 me-2">Guardar cambios</button>
+        <a href="{% url 'lista_pagos' %}" class="btn btn-outline-secondary px-4">Cancelar</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

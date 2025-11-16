@@ -10,7 +10,24 @@ class UsuarioCreationForm(UserCreationForm):
 class UsuarioChangeForm(UserChangeForm):
     class Meta:
         model = Usuario
-        exclude = ("id",)
+        fields = [
+            "username",
+            "first_name",
+            "last_name",
+            "email",
+            "avatar",
+            "fecha_de_nacimiento",
+            "direccion",
+        ]
+        labels = {
+            "username": "Nombre de usuario",
+            "first_name": "Nombre",
+            "last_name": "Apellido",
+            "email": "Correo electrónico",
+            "avatar": "Foto de perfil",
+            "fecha_de_nacimiento": "Fecha de nacimiento",
+            "direccion": "Dirección",
+        }
         
 
 

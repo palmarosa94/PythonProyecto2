@@ -1,59 +1,66 @@
 {% extends 'coder/index.html' %}
+{% load static %}
 
-{% block titulo %}Registrar Pago - Beneficiarios SR{% endblock %}
+{% block titulo %}Nueva Solicitud de Pago{% endblock %}
 
 {% block contenido %}
-<div class="container my-5">
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0 rounded-3">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4 class="mb-0">Registrar Solicitud de Pago</h4>
+                </div>
+                <div class="card-body p-4">
 
-    <!-- Sección de registro de pago -->
-    <section class="mb-5">
-        <h2 class="mb-4">Registrar Solicitud de Pago</h2>
-        <form method="post" action="{% url 'crear_pago' %}">
-    {% csrf_token %}
-    {% if form.errors %}
-  <div class="alert alert-danger">
-    <ul>
-      {% for field, errors in form.errors.items %}
-        <li><strong>{{ field }}:</strong> {{ errors|striptags }}</li>
-      {% endfor %}
-    </ul>
-  </div>
-{% endif %}
-    <div class="mb-3">
-        {{ form.nro_siniestro.label_tag }}
-        {{ form.nro_siniestro }}
-    </div>
-    <div class="mb-3">
-        {{ form.importe.label_tag }}
-        {{ form.importe }}
-    </div>
-    <button type="submit" class="btn btn-primary">Guardar Pago</button>
-</form>
-    </section>
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
 
-    <!-- Sección de lista de pagos -->
-    <section>
-        <h2 class="mb-4">Mis Pagos</h2>
-        {% if pagos %}
-            <div class="row row-cols-1 g-3">
-                {% for pago in pagos %}
-                    <div class="col">
-                        <div class="card shadow-sm">
-                            <div class="card-body">
-                                <p><strong>Número de Siniestro:</strong> {{ pago.nro_siniestro }}</p>
-                                <p><strong>Importe:</strong> {{ pago.importe }}</p>
-                                <p><strong>Fecha de Solicitud:</strong> {{ pago.fecha_solicitud }}</p>
-                            </div>
+                        <!-- Número de siniestro -->
+                        <div class="mb-3">
+                            <label for="id_nro_siniestro" class="form-label">Número de siniestro</label>
+                            {{ form.nro_siniestro }}
+                            {% if form.nro_siniestro.errors %}
+                                <div class="text-danger small">{{ form.nro_siniestro.errors }}</div>
+                            {% endif %}
                         </div>
-                    </div>
-                {% endfor %}
-            </div>
-        {% else %}
-            <p>No has registrado pagos aún.</p>
-        {% endif %}
-    </section>
 
+                        <!-- Número de factura -->
+                        <div class="mb-3">
+                            <label for="id_nro_factura" class="form-label">Número de factura</label>
+                            {{ form.nro_factura }}
+                            <div class="form-text">Formato: 000-0000000000</div>
+                            {% if form.nro_factura.errors %}
+                                <div class="text-danger small">{{ form.nro_factura.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Fecha de emisión de la factura -->
+                        <div class="mb-3">
+                            <label for="id_fecha_factura" class="form-label">Fecha de emisión</label>
+                            {{ form.fecha_factura }}
+                            {% if form.fecha_factura.errors %}
+                                <div class="text-danger small">{{ form.fecha_factura.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Importe -->
+                        <div class="mb-3">
+                            <label for="id_importe" class="form-label">Importe</label>
+                            {{ form.importe }}
+                            {% if form.importe.errors %}
+                                <div class="text-danger small">{{ form.importe.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-success">Guardar Solicitud</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
-
-

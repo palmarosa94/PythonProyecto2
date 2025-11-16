@@ -4,6 +4,7 @@ from coder.models import Abogados, Peritos, Jurisdicciones
 from django.db.models import Q
 from django.contrib import messages
 from .forms import AbogadosForm
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def index(request):
@@ -12,6 +13,7 @@ def index(request):
 def test(request):
     return render(request, "coder/test.html")
 
+@login_required
 def crear_abogado(request):
     if request.method == "POST":
         form = AbogadosForm(request.POST)
@@ -77,4 +79,9 @@ def modificar_abogado(request, nro_abogado):
         
     return render(request, "coder/abogado_form.html", {'form': form, 'edicion': True})
 
+
+from django.shortcuts import render
+
+def about(request):
+    return render(request, "coder/about.html")
 

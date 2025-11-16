@@ -13,15 +13,16 @@ def register(request):
         
     else:
         form = UsuarioCreationForm()
-    return render(request, "accounts/register.htlm", {'form': form})
+    return render(request, "accounts/register.html", {'form': form})
 
 @login_required
 def profile_detail(request):
     return render(request, "accounts/profile_detail.html", {"user": request.user})
 
+@login_required
 def profile_edit(request):
     if request.method == "POST":
-        form = UsuarioChangeForm(request.POST, request.FILE, instance=request.user)
+        form = UsuarioChangeForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
             form.save()
             return redirect('profile_detail')

@@ -1,29 +1,68 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block titulo %}Inicio - Mi Proyecto Django{% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" 
           integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
     <style>
         body {
             background-color: #f8f9fa;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
+
+        /* HERO centrado vertical y horizontal */
         .hero {
             background-color: #e9ecef;
-            padding: 100px 0;
+            padding: 80px 0;
             text-align: center;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
+
+        .hero h1 {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .hero .lead {
+            color: #6c757d;
+        }
+
         .card-custom {
             border: none;
             border-radius: 15px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
         }
+
+        .card-custom:hover {
+            transform: scale(1.03);
+        }
+
         footer {
             background-color: #f1f3f5;
             padding: 20px 0;
             text-align: center;
+            margin-top: auto;
+        }
+
+        /* Centrar la sección de cards */
+        .cards-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .card-container {
+            max-width: 400px;
         }
     </style>
 </head>
@@ -39,26 +78,20 @@
     </button>
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
       <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'abogados_list' %}">Abogados</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'perito_form' %}">Peritos</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'jurisdicciones_form' %}">Jurisdicciones</a>
-        </li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'abogados_list' %}">Abogados</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'perito_form' %}">Peritos</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'jurisdicciones_form' %}">Jurisdicciones</a></li>
         {% if user.is_authenticated %}
-        <li class="nav-item"><a class="nav-link" href="{% url 'profile_detail' %}">Perfil</a></li>
-        <li class="nav-item">
-            <form action= "{% url 'logout' %}" method="POST" style="display: inline;">
-                {% csrf_token %}
-                <button type="submit" class="nav-item nav-link"> Cerrar sesión</button>
-            </form> 
-        </li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'profile_detail' %}">Perfil</a></li>
+          <li class="nav-item">
+              <form action="{% url 'logout' %}" method="POST" style="display: inline;">
+                  {% csrf_token %}
+                  <button type="submit" class="nav-item nav-link btn btn-link">Cerrar sesión</button>
+              </form> 
+          </li>
         {% else %}
-        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Iniciar sesión</a></li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Registrarse</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Iniciar sesión</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Registrarse</a></li>
         {% endif %}
       </ul>
     </div>
@@ -69,50 +102,22 @@
 <!-- Hero Section -->
 <section class="hero">
     <div class="container">
-        <h1 class="display-4">Beneficiarios SR</h1>
-        <p class="lead text-muted">Registro y Solicitud de Pagos para Beneficiarios</p>
-        <a href="{% url 'crear_pago' %}" class="btn btn-primary btn-lg mt-3">Comenzar</a>
+        <h1 class="display-4 mb-3">Beneficiarios SR</h1>
+        <p class="lead mb-4">Registro y solicitud de pagos para beneficiarios</p>
     </div>
 </section>
 
 <!-- Cards Section -->
 <section class="py-5">
-    <div class="container">
-        <div class="row g-4">
-            <!-- Abogado Card -->
-            <div class="col-md-4">
-                <div class="card card-custom p-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Soy Abogado</h5>
-                        <p class="card-text text-muted">Gestión de pagos y registro de beneficiarios.</p>
-                        <ul class="list-unstyled">
-                            <li><a class="btn btn-link p-0" href="{% url 'lista_pagos' %}">Mis Pagos</a></li>
-                            <li><a class="btn btn-link p-0" href="{% url 'crear_pago' %}">Nuevo Pago</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Perito Card -->
-            <div class="col-md-4">
-                <div class="card card-custom p-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Soy Perito</h5>
-                        <p class="card-text text-muted">Accede a tus registros y solicita pagos de manera fácil.</p>
-                        <a href="#" class="btn btn-outline-primary">Más info</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Servicio 3 Card -->
-            <div class="col-md-4">
-                <div class="card card-custom p-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Servicio 3</h5>
-                        <p class="card-text text-muted">Información sobre otro servicio o sección importante de tu web.</p>
-                        <a href="#" class="btn btn-outline-primary">Más info</a>
-                    </div>
-                </div>
+    <div class="container cards-wrapper">
+        <div class="card card-custom p-4 text-center card-container">
+            <div class="card-body">
+                <h5 class="card-title fw-bold">Gestión de Pagos</h5>
+                <p class="card-text text-muted">Cargá tus solicitudes y consultá el estado de tus pagos.</p>
+                <ul class="list-unstyled mt-3">
+                    <li><a class="btn btn-outline-primary w-100 mb-2" href="{% url 'lista_pagos' %}">Mis Pagos</a></li>
+                    <li><a class="btn btn-primary w-100" href="{% url 'crear_pago' %}">Nuevo Pago</a></li>
+                </ul>
             </div>
         </div>
     </div>
@@ -120,14 +125,44 @@
 {% endblock %}
 
 <!-- Footer -->
-<footer>
-    <div class="container">
-        <p class="text-muted mb-0">&copy; 2025 Mi Sitio. Todos los derechos reservados.</p>
+<footer class="bg-light mt-5 border-top">
+  <div class="container py-4">
+    <div class="row text-center text-md-start">
+      <!-- Columna 1: Contacto -->
+      <div class="col-md-4 mb-3">
+        <h6 class="fw-bold text-uppercase mb-3">Contacto</h6>
+        <p class="mb-1 text-muted">Correo: 
+          <a href="mailto:info@misitio.com" class="text-decoration-none text-primary">info@misitio.com</a>
+        </p>
+        <p class="mb-1 text-muted">Teléfono: 
+          <a href="tel:+541100000000" class="text-decoration-none text-primary">+54 11 0000-0000</a>
+        </p>
+      </div>
+
+      <!-- Columna 2: Redes sociales -->
+      <div class="col-md-4 mb-3">
+        <h6 class="fw-bold text-uppercase mb-3">Seguime</h6>
+        <a href="#" class="text-muted me-3"><i class="bi bi-instagram"></i> Instagram</a><br>
+        <a href="#" class="text-muted"><i class="bi bi-linkedin"></i> LinkedIn</a>
+      </div>
+
+      <!-- Columna 3: Acerca de mí -->
+      <div class="col-md-4 mb-3">
+        <h6 class="fw-bold text-uppercase mb-3">Sobre mí</h6>
+        <a href="{% url 'about' %}" class="btn btn-outline-primary btn-sm">Acerca de mí</a>
+      </div>
     </div>
+
+    <hr>
+    <div class="text-center text-muted small">
+      &copy; 2025 Mi Sitio. Todos los derechos reservados.
+    </div>
+  </div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" 
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
 </html>
+
 

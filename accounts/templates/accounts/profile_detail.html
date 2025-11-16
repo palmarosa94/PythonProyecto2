@@ -1,0 +1,63 @@
+{% extends "coder/index.html" %}
+
+{% block titulo %}Perfil de {{ user.username }}{% endblock %}
+
+{% block contenido %}
+<section class="py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6">
+
+        <div class="card shadow-sm border-0 rounded-4">
+          <div class="card-body text-center py-4">
+
+            <div class="mb-4">
+                {% if user.avatar %}
+                  <img src="{{ user.avatar.url }}" 
+                      alt="avatar" width="100" height="100"
+                      class="rounded-circle border shadow-sm">
+              {% else %}
+                  <img src="/media/default/default-perfil.png"
+                      alt="avatar" width="100" height="100"
+                      class="rounded-circle border shadow-sm">
+              {% endif %}
+            </div>
+
+            <h3 class="card-title mb-2">{{ user.username }}</h3>
+            <p class="text-muted mb-4">{{ user.email }}</p>
+
+            <hr>
+
+            <div class="text-start px-4">
+              <h5 class="mb-3 text-secondary">Información de cuenta</h5>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <strong>Usuario:</strong> <span>{{ user.username }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <strong>Email:</strong> <span>{{ user.email }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <strong>Fecha de registro:</strong>
+                  <span>{{ user.date_joined|date:"d/m/Y" }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <strong>Último acceso:</strong>
+                  <span>{{ user.last_login|date:"d/m/Y H:i" }}</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="mt-4 d-flex justify-content-center gap-2">
+              <a href="{% url 'index' %}" class="btn btn-outline-secondary px-4">Volver al inicio</a>
+              <a href="{% url 'profile_edit' %}" class="btn btn-primary px-4">Editar perfil</a>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -22,6 +22,7 @@
             <td>{{ pago.nro_siniestro }}</td>
             <td>${{ pago.importe }}</td>
             <td>{{ pago.fecha_solicitud|date:"d/m/Y H:i" }}</td>
+            <td>{{ pago.nro_factura }}</td>
             <td>
               <a href="{% url 'detalle_pago' pago.id %}" class="btn btn-outline-primary btn-sm me-1">Ver</a>
               <a href="{% url 'editar_pago' pago.id %}" class="btn btn-outline-warning btn-sm me-1">Editar</a>
